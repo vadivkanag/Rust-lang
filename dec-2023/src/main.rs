@@ -1,6 +1,6 @@
 // use rand::Rng;
 // use std::cmp::Ordering;
-use std::io;
+// use std::io;
 // mod function;
 
 fn main() {
@@ -302,27 +302,95 @@ fn main() {
     //     println!("reverse looping - current position is {item}");
     // }
 
-    // exercise-1: farenheit to celcius and convert it back to farenheit
-    // c = (f - 32) * 5/9
-    // f = (c * 9/5) + 32
-    let mut faren = String::new();
-    io::stdin()
-        .read_line(&mut faren)
-        .expect("expect tep in farenheit");
-    let faren_numeric: f32 = faren.trim().parse().expect("enter temp in farenhei");
-    let celcius_temp = f_to_c(faren_numeric);
-    let faren_temp = c_to_f(celcius_temp);
-    println!("Temp in celcius: {celcius_temp}");
-    println!("Temp in farenhei: {faren_temp}");
+    // // exercise-1: farenheit to celcius and convert it back to farenheit
+    // // c = (f - 32) * 5/9
+    // // f = (c * 9/5) + 32
+    // let mut faren = String::new();
+    // io::stdin()
+    //     .read_line(&mut faren)
+    //     .expect("expect tep in farenheit");
+    // let faren_numeric: f32 = faren.trim().parse().expect("enter temp in farenhei");
+    // let celcius_temp = f_to_c(faren_numeric);
+    // let faren_temp = c_to_f(celcius_temp);
+    // println!("Temp in celcius: {celcius_temp}");
+    // println!("Temp in farenhei: {faren_temp}");
+
+    // // 15. Ownership & related features: borrowing, slices, and how Rust lays data out in memory
+    // let s = String::from("hello");
+    // takes_ownership(s);
+    // // takes_ownership(s.clone());
+    // let x = 5;
+    // makes_copy(x);
+
+    // println!("values are: {} , {}", {s}, {x});
+
+    // // Return Values and Scope
+    // let s1 = gives_ownership();
+    // println!("value of s1 is: {s1}");
+    // let s2 = String::from("hello");
+    // println!("value of s2 is: {s2}"); // will print as s2 still holds the value.
+    // let s3 = takes_and_gives_back(s2); // s2 moved to s3 by fn takes_and_gives_back() return
+    // // println!("value of s2 is: {s2}"); // will error out as the ownership moved into fn takes_and_gives_back()
+    // println!("value of s3 is: {s3}");
+
+    // // tuple
+    // let s1 = String::from("hello");
+    // let (s2, length) = calculate_length(s1);
+    // // println!("value of s1 is: {s1}"); // we cant use as s1 ownership is passed onto fn calculate_length
+    // println!("String value is `{}` and it's length is `{}`", s2, length);
+
+    // 16. References & Borrowing
+    // in the above tuple example we needed to return the resulted string back to the calling fn in order to
+    // access the value and print it.
+    // References gives us another way so we can only pass the string reference/pointer to the function
+    // without returning back we can still use the string with latest value should that get updated inside called function.
+    let s1 = String::from("hello");
+    // let length = calculate_length(s1);
+    // println!("String value is `{}` and it's length is `{}`", s1, length); // this error out as ownership moved into fn
+
+    let length = calculate_length(&s1); // here we pass only the pointer to that string, & -> pointer
+    println!("String value is `{}` and it's length is `{}`", s1, length);
 }
 
-fn f_to_c(faren: f32) -> f32 {
-    (faren - 32.0) * 5.0 / 9.0 as f32
+fn calculate_length(str: &String) -> usize {
+    let len = str.len();
+    len
 }
 
-fn c_to_f(cel: f32) -> f32 {
-    (cel * 9.0) / 5.0 + 32.0 as f32
-}
+// fn calculate_length(str: String) -> usize{
+//     let len = str.len();
+//     len
+// }
+
+// fn calculate_length(str: String) -> (String, usize){
+//     let len = str.len();
+//     (str, len)
+// }
+
+// fn gives_ownership() -> String {
+//     let some_string = String::from("yours");
+//     some_string
+// }
+
+// fn takes_and_gives_back(a_str: String) -> String {
+//     a_str
+// }
+
+// fn takes_ownership(some_string: String) {
+//     println!("Some string value is {some_string}");
+// }
+
+// fn makes_copy(number: i32) {
+//     println!("value of numner is {number}");
+// }
+
+// fn f_to_c(faren: f32) -> f32 {
+//     (faren - 32.0) * 5.0 / 9.0 as f32
+// }
+
+// fn c_to_f(cel: f32) -> f32 {
+//     (cel * 9.0) / 5.0 + 32.0 as f32
+// }
 
 // fn five() -> i32 {
 //     5
